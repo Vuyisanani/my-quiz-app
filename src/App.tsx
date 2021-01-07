@@ -3,6 +3,8 @@ import QuestionCard  from './components/QuestionCard';
 
 const App = () => {
 
+  const TOTAL_QUESTIONS = 10;
+  
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [number,setNumber] = useState(0);
@@ -21,7 +23,7 @@ const App = () => {
   const nextQuestion = () => {
 
   }
-
+  //For loading Questions, will later implement a spinner
   return (
     <div className="App">
       <h1> My Quiz App</h1>
@@ -29,8 +31,15 @@ const App = () => {
         Start
       </button>
       <p className="score"> Score: </p>
-      <p>Loading Questios..</p>
-      <QuestionCard />
+      <p>Loading Questios..</p> 
+      <QuestionCard 
+        questionNr={number + 1}
+        totalQuestions={TOTAL_QUESTIONS}
+        question={questions[number].question}
+        answers={questions[number].answers}
+        userAnswer={userAnswers ? userAnswers[number] : undefined}
+        callback={checkAswer}
+      />
 
       <button className="next" onClick={nextQuestion}>Next</button>
 
