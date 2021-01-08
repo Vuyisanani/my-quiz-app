@@ -35,6 +35,24 @@ const App = () => {
 
   const checkAswer = (e: React.MouseEvent<HTMLButtonElement>) => {
 
+    if(!gameOver) {
+      // users answer
+      const answer = e.currentTarget.value;
+      //c heck correct answer agains users answer
+      const correct = questions[number].correct_answer === answer;
+      // add a score if the answer is correct
+      if(correct) setScore(prev => prev + 1);
+      // save answer to the array for users answer
+
+      const answerObject = {
+        question: questions[number].question,
+        answer,
+        correct,
+        correct_answer: questions[number].correct_answer,
+      };
+      setUserAnswers((prev) => [...prev, answerObject]);
+    }
+
   }
 
   const nextQuestion = () => {
@@ -64,8 +82,9 @@ const App = () => {
           callback={checkAswer}
         />
       )}
-
+      {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS -1 ? (
       <button className="next" onClick={nextQuestion}>Next Question</button>
+      ): null}
 
     </div>
   );
